@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import indoor.creonilso.com.br.coletadadosindoor.R;
 import indoor.creonilso.com.br.coletadadosindoor.model.WifiFingerprint;
 import indoor.creonilso.com.br.coletadadosindoor.presenter.interfaces.IHomePresenter;
 import indoor.creonilso.com.br.coletadadosindoor.util.JsonFileUtils;
@@ -21,19 +22,19 @@ import indoor.creonilso.com.br.coletadadosindoor.view.mvpview.IHomeView;
 
 public class HomePresenter implements IHomePresenter {
 
-    private IHomeView homeView;
+    private IHomeView mHomeView;
     private List<ScanResult> mWifiList;
     private boolean isColetando;
     private List<WifiFingerprint> mFingerprints;
-    public static final int NUMERO_DE_MEDIDAS = 100;
+    public static final int NUMERO_DE_MEDIDAS = 10;
 
     public HomePresenter(IHomeView homeView) {
-        this.homeView = homeView;
+        this.mHomeView = homeView;
     }
 
     @Override
     public void onCreate() {
-        WifiManager wifiManager = (WifiManager) homeView.getContext().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        WifiManager wifiManager = (WifiManager) mHomeView.getContext().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         mWifiList = wifiManager.getScanResults();
         mFingerprints = new ArrayList<>();
     }
@@ -59,21 +60,22 @@ public class HomePresenter implements IHomePresenter {
                     }
                 }
 
-                salvarDadosRssi("");
+                salvarDadosRssi();
             }
         }, 500);
     }
 
     @Override
-    public void salvarDadosRssi(String localAtual) {
+    public void salvarDadosRssi() {
         try {
             JsonFileUtils.writeFingerprintJsonStream(mFingerprints);
         } catch (IOException e) {
             e.printStackTrace();
         }finally {
-            homeView.mostrarMensagem("Arquivo salvo");
-            homeView.habilitarBotao();
-            homeView.setBtnMedirTexto("Medir");
+            Context context = mHomeView.getContext();
+            mHomeView.mostrarMensagem(context.getString(R.string.txt_arquivo_salvo_armazenamento_interno));
+            mHomeView.habilitarBotao();
+            mHomeView.setBtnMedirTexto(context.getString(R.string.coletar_dados));
         }
     }
 }

@@ -7,5 +7,5 @@ package indoor.creonilso.com.br.coletadadosindoor.presenter.interfaces;
 public interface IHomePresenter extends IPresenter {
     void coletarDados(String localAtual);
 
-    void salvarDadosRssi(String localAtual);
+    void salvarDadosRssi();
 }

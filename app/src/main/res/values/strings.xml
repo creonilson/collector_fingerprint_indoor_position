@@ -6,4 +6,11 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="visualizar_medidas">Visualizar Medidas</string>
+    <string name="escolher_aps">Escolher APs</string>
+    <string name="local_da_coleta">Local da coleta</string>
+    <string name="coletar_dados">Coletar dados</string>
+    <string name="txt_coletando">Coletando ...</string>
+    <string name="txt_arquivo_salvo_armazenamento_interno">Arquivo salvo no armazenamento interno do dispositivo</string>
+    <string name="confirmar">Confirmar</string>
 </resources>

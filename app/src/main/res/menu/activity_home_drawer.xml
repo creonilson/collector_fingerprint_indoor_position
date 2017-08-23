@@ -4,10 +4,10 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_escolha_aps"
-            android:title="Escolher APs" />
+            android:title="@string/escolher_aps" />
         <item
             android:id="@+id/nav_visualizar_medida"
-            android:title="Visualizar Medidad" />
+            android:title="@string/visualizar_medidas" />
     </group>
 
 </menu>

@@ -24,7 +24,7 @@ public class JsonFileUtils {
         if(!file.exists()){
             file.createNewFile();
         }
-        OutputStream outputStream = new FileOutputStream(file);
+        OutputStream outputStream = new FileOutputStream(file, true);
         JsonWriter writer = new JsonWriter(new OutputStreamWriter(outputStream, "UTF-8"));
         writer.setIndent("  ");
         writeFingerprintArray(writer, fingerprints);
