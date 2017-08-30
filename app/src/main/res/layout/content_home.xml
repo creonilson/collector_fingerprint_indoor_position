@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/local_da_coleta"
-        android:inputType="textPersonName"
+        android:inputType="text"
         tools:layout_editor_absoluteX="99dp"
         tools:layout_editor_absoluteY="131dp"
         android:layout_marginTop="71dp"

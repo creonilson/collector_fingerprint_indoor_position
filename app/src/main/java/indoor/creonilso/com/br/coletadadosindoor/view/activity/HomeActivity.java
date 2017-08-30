@@ -2,7 +2,9 @@ package indoor.creonilso.com.br.coletadadosindoor.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +17,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.io.File;
 
 import indoor.creonilso.com.br.coletadadosindoor.R;
 import indoor.creonilso.com.br.coletadadosindoor.presenter.HomePresenter;
@@ -88,6 +92,11 @@ public class HomeActivity extends AppCompatActivity
                 startActivity(new Intent(this, ListaSSIDEscolhaActivity.class));
                 break;
             case R.id.nav_visualizar_medida:
+                File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/resultados.json");
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setDataAndType(Uri.fromFile(file), "text/json");
+                startActivity(intent);
                 break;
         }
 

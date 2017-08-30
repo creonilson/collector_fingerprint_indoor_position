@@ -14,6 +14,7 @@ import indoor.creonilso.com.br.coletadadosindoor.R;
 import indoor.creonilso.com.br.coletadadosindoor.model.WifiFingerprint;
 import indoor.creonilso.com.br.coletadadosindoor.presenter.interfaces.IHomePresenter;
 import indoor.creonilso.com.br.coletadadosindoor.util.JsonFileUtils;
+import indoor.creonilso.com.br.coletadadosindoor.util.SharedPreferencesUtil;
 import indoor.creonilso.com.br.coletadadosindoor.view.mvpview.IHomeView;
 
 /**
@@ -26,7 +27,8 @@ public class HomePresenter implements IHomePresenter {
     private List<ScanResult> mWifiList;
     private boolean isColetando;
     private List<WifiFingerprint> mFingerprints;
-    public static final int NUMERO_DE_MEDIDAS = 10;
+    private List<String> mSsidSeleionados;
+    private static final int NUMERO_DE_MEDIDAS = 10;
 
     public HomePresenter(IHomeView homeView) {
         this.mHomeView = homeView;
@@ -34,14 +36,19 @@ public class HomePresenter implements IHomePresenter {
 
     @Override
     public void onCreate() {
-        WifiManager wifiManager = (WifiManager) mHomeView.getContext().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        Context context = mHomeView.getContext();
+        WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         mWifiList = wifiManager.getScanResults();
         mFingerprints = new ArrayList<>();
+        mSsidSeleionados = new SharedPreferencesUtil(context).pegarLista(ListaSSIDEscolhaPresenter.KEY_ESCOLHIDOS);
     }
 
     @Override
     public void coletarDados(final String localAtual){
         mFingerprints.clear();
+        if(mSsidSeleionados.isEmpty()){
+            return;
+        }
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             int contVezes = 0;
             @Override
@@ -49,7 +56,7 @@ public class HomePresenter implements IHomePresenter {
                 while (contVezes < NUMERO_DE_MEDIDAS) {
                     contVezes ++;
                     for (ScanResult scanResult : mWifiList) {
-                        if (scanResult.SSID.equals("WIVIA") || scanResult.SSID.equals("IVIA.BNB") || scanResult.SSID.equals("IVIA@Visitante")) {
+                        if (mSsidSeleionados.contains(scanResult.SSID)) {
                             WifiFingerprint fingerprint = new WifiFingerprint();
                             fingerprint.setSSID(scanResult.SSID);
                             fingerprint.setRSSI(scanResult.level);
